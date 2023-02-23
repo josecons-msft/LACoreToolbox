@@ -2,8 +2,11 @@
 # ----------------------------------------------------------------------------
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # ----------------------------------------------------------------------------
-# This script is used to install CEF agent on a linux machine an configure the
+# This script is used to configure CEF agent on a linux machine an configure the
 # syslog daemon on the linux machine.
+# 
+# Please note this is a modified version of the following script:
+# https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/DataConnectors/CEF/cef_installer.py
 # Supported OS:
 #   64-bit
 #       CentOS 7 and 8
