@@ -4,7 +4,6 @@
 # ----------------------------------------------------------------------------
 # This script is used to configure CEF agent on a linux machine an configure the
 # syslog daemon on the linux machine.
-# 
 # Please note this is a modified version of the following script:
 # https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/DataConnectors/CEF/cef_installer.py
 # Supported OS:
