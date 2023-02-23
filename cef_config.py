@@ -654,7 +654,7 @@ def main():
     check_multi_homing(workspace_id=workspace_id)
     #if download_omsagent() and install_omsagent(workspace_id=workspace_id, primary_key=primary_key, oms_agent_install_url=oms_agent_install_url):
         # if setting oms agent configuration has failed we need to stop the script
-    if not set_omsagent_configuration(workspace_id=workspace_id, omsagent_incoming_port=omsagent_incoming_port):
+        if not set_omsagent_configuration(workspace_id=workspace_id, omsagent_incoming_port=omsagent_incoming_port):
         return
     if is_rsyslog():
         print("Located rsyslog daemon running on the machine")
