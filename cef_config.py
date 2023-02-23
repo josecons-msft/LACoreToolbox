@@ -651,7 +651,7 @@ def main():
                 elif "-help" in sys.argv[index]:
                     print(help_text)
                     return
-    check_multi_homing(workspace_id=workspace_id)
+    #check_multi_homing(workspace_id=workspace_id)
     #if download_omsagent() and install_omsagent(workspace_id=workspace_id, primary_key=primary_key, oms_agent_install_url=oms_agent_install_url):
     # if setting oms agent configuration has failed we need to stop the script
     if not set_omsagent_configuration(workspace_id=workspace_id, omsagent_incoming_port=omsagent_incoming_port):
