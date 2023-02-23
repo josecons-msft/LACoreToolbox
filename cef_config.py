@@ -655,7 +655,7 @@ def main():
     #if download_omsagent() and install_omsagent(workspace_id=workspace_id, primary_key=primary_key, oms_agent_install_url=oms_agent_install_url):
     # if setting oms agent configuration has failed we need to stop the script
     if not set_omsagent_configuration(workspace_id=workspace_id, omsagent_incoming_port=omsagent_incoming_port):
-    return
+        return
     if is_rsyslog():
         print("Located rsyslog daemon running on the machine")
         create_daemon_forwarding_configuration(omsagent_incoming_port=omsagent_incoming_port,
