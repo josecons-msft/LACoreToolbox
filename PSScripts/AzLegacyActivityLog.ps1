@@ -1,3 +1,16 @@
+# This script lists the data sources of type 'AzureActivityLog', which is the legacy method of collecting Azure Activity Logs. After listing the data sources, it provides the option to delete then.
+# The script leverages two existing PS cmdlets to achieve its goal in an easy and faster way. The two cmdlets are: Get-AzOperationalInsightsDataSource and Remove-AzOperationalInsightsDataSource
+#
+# Usage: .\AzLegacyActivityLog.ps1 -workspace myworkspace -resourceGroup myresource group
+#
+# Author = 'José Miguel Constantino'
+# LicenseUri = 'https://github.com/josecons-msft/LACoreToolbox/blob/main/LICENSE'
+# ProjectUri = 'https://github.com/josecons-msft/LACoreToolbox'
+#
+# Version history:
+# 2023/03/2023 - v1.0 - Initial release with Basic error handling
+
+
 [CmdletBinding()]
 param(
     [Parameter(Mandatory=$true)]
