@@ -9,7 +9,7 @@
 #
 # Version history:
 # 2023/03/2023 - v1.0 - Initial release with Basic error handling
-
+# 2023/03/2023 - v1.1 - Added bulk option, i.e., to delete all data sources of type 'AzureActivityLog'
 
 [CmdletBinding()]
 param(
@@ -30,7 +30,7 @@ if (-not $resourceGroup) {
 
  try
 	{   
-		clear
+		Clear-Host
 		$wksp = Get-AzOperationalInsightsWorkspace -ResourceGroupName $resourceGroup -Name $workspace -ErrorAction Stop
 	}
  catch
@@ -46,12 +46,12 @@ Write-Host "" ; "" ; ""
 Write-Host -ForegroundColor Green "Workspace URI: " $wksp.ResourceId
 Write-Host "=================================================================================================================" 
 
-# Get the AzureActivityLog data sources for the specified subscription
+# Get the AzureActivityLog legacy data sources for the specified workspace
 $dataSources = Get-AzOperationalInsightsDataSource -WorkspaceName $workspace -ResourceGroupName $resourceGroup -Kind AzureActivityLog
 
 # Check if there are any data sources
 if ($dataSources.Count -eq 0) {
-    Write-Host "No AzureActivityLog legacy data sources found"
+    Write-Host "No AzureActivityLog legacy data sources found in the specified workspace."
 	Write-Host "=================================================================================================================" 
     exit
 }
@@ -70,13 +70,51 @@ foreach ($dataSource in $dataSources) {
 Write-Host "=================================================================================================================" 
 Write-Host "" ; "" ; "" 
 
+# Ask the user what to do: remove all AzureActivityLog legacy data sources (A), delete them one by one (O), or exit (X)
+$valid_inputs = @('A', 'O', 'X')
+do {
+    $choice = Read-Host "Do you want to remove all AzureActivityLog legacy data sources (A), select and remove one by one (O), or exit (X)?"
+} until ($valid_inputs -contains $choice.ToUpper())
 
+switch ($choice.ToUpper()) {
+'A' {
+	$responseA = Read-Host "Do you really want to remove ALL AzureActivityLog legacy data sources? (Y/N)"
+	if ($responseA.ToUpper() -eq "Y")
+		{
+			Write-Host "Removing all AzureActivityLog legacy data sources..."
+			foreach ($dataSource in $dataSources) 
+				{
+				Remove-AzOperationalInsightsDataSource -WorkspaceName $workspace -ResourceGroupName $resourceGroup -Name $dataSource.Name -Force
+				Write-Host "Data source $($dataSource.Name) has been removed!"
+				}
+			exit
+		}
+	exit
+	}
+	
+# Code to delete all workspaces goes here
+
+'O' {
 # Loop again thru the data sources so we can select which ones to remove
-foreach ($dataSource in $dataSources) {
+foreach ($dataSource in $dataSources) 
+	{
 	$response = Read-Host "Do you want to remove data source $($dataSource.Name)? (Y/N)"
-	if ($response -eq "Y" -or $response -eq "y") {
+	if ($response -eq "Y" -or $response -eq "y") 
+		{
 		Remove-AzOperationalInsightsDataSource -WorkspaceName $workspace -ResourceGroupName $resourceGroup -Name $dataSource.Name
 		Write-Host "Data source $($dataSource.Name) has been removed"
+		}
+	}
+}
+'X' {
+	Write-Host "Exiting..."
+	exit
+# Code to exit the script goes here
+}
+Default {
+	Write-Host "Invalid input. Exiting..."
+	exit
+# Code to exit the script due to invalid input goes here
 }
 }
 Write-Host "================================================================================================================="
