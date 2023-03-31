@@ -30,7 +30,7 @@ if (-not $resourceGroup) {
 
  try
 	{   
-		Clear-Host
+		#Clear-Host
 		$wksp = Get-AzOperationalInsightsWorkspace -ResourceGroupName $resourceGroup -Name $workspace -ErrorAction Stop
 	}
  catch
